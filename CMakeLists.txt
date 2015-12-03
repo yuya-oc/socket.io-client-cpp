@@ -36,6 +36,11 @@ target_include_directories(sioclient PRIVATE ${Boost_INCLUDE_DIRS}
 
 set_property(TARGET sioclient PROPERTY CXX_STANDARD 11)
 set_property(TARGET sioclient PROPERTY CXX_STANDARD_REQUIRED ON)
+if(MSVC)
+  if(NOT(MSVC_VERSION LESS 1900))
+    target_compile_definitions(sioclient PRIVATE -D_WEBSOCKETPP_NOEXCEPT_)
+  endif()
+endif()
 target_link_libraries(sioclient PRIVATE ${Boost_LIBRARIES})
 if(BUILD_SHARED_LIBS)
 set_target_properties(sioclient
@@ -58,6 +63,11 @@ target_include_directories(sioclient_tls PRIVATE ${Boost_INCLUDE_DIRS}
 
 set_property(TARGET sioclient_tls PROPERTY CXX_STANDARD 11)
 set_property(TARGET sioclient_tls PROPERTY CXX_STANDARD_REQUIRED ON)
+if(MSVC)
+  if(NOT(MSVC_VERSION LESS 1900))
+    target_compile_definitions(sioclient_tls PRIVATE -D_WEBSOCKETPP_NOEXCEPT_)
+  endif()
+endif()
 target_link_libraries(sioclient_tls PRIVATE ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} )
 target_compile_definitions(sioclient_tls PRIVATE -DSIO_TLS)
 if(BUILD_SHARED_LIBS)
